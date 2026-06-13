@@ -267,6 +267,7 @@ svg {
 }
 
 .hero-illustration {
+  position: relative;
   width: 100%;
   max-width: 455px;
   display: flex;
@@ -285,6 +286,21 @@ svg {
   opacity: 1;
   mix-blend-mode: normal;
   transform: none;
+}
+
+.tag-text {
+  position: absolute;
+  right: 88px;
+  top: 214px;
+  transform: rotate(-8deg);
+  color: var(--color-text);
+  font-family: var(--font-display);
+  font-size: 28px;
+  font-weight: 800;
+  line-height: 0.82;
+  letter-spacing: -0.02em;
+  text-align: center;
+  pointer-events: none;
 }
 
 .trust-feature-band {
@@ -887,6 +903,12 @@ svg {
     max-width: 390px;
   }
 
+  .tag-text {
+    right: 77px;
+    top: 184px;
+    font-size: 24px;
+  }
+
   .trust-feature-band {
     height: auto;
     padding: 36px 48px 44px;
@@ -1012,13 +1034,49 @@ svg {
     max-width: 360px;
   }
 
+  .tag-text {
+    right: 69px;
+    top: 169px;
+    font-size: 22px;
+  }
+
   .trust-feature-band {
     padding: 34px 20px 40px;
   }
 
   .feature-grid {
-    grid-template-columns: 1fr;
-    gap: 28px;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 24px 16px;
+    align-items: start;
+  }
+
+  .feature-card {
+    min-width: 0;
+    padding: 8px 6px;
+  }
+
+  .feature-icon {
+    width: 64px;
+    height: 64px;
+    margin-inline: auto;
+  }
+
+  .feature-icon svg {
+    width: 32px;
+    height: 32px;
+  }
+
+  .feature-card h2 {
+    margin-top: 14px;
+    font-size: 16px;
+    line-height: 1.18;
+  }
+
+  .feature-card p {
+    width: auto;
+    max-width: 145px;
+    font-size: 13px;
+    line-height: 1.35;
   }
 
   .dark-contact-section {
