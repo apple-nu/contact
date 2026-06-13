@@ -599,12 +599,14 @@ svg {
 }
 
 .faq-section {
-  height: 289px;
+  min-height: 289px;
   display: grid;
   grid-template-columns: 190px 580px;
   gap: 96px;
-  padding: 36px 80px 34px 78px;
+  align-items: start;
+  padding: 36px 80px 48px 78px;
   background: var(--color-bg);
+  overflow: visible;
 }
 
 .faq-title-block {
@@ -653,10 +655,15 @@ svg {
 .faq-list {
   display: grid;
   gap: 13px;
+  height: auto;
+  align-content: start;
+  overflow: visible;
 }
 
 .faq-list details {
   width: 578px;
+  max-width: 100%;
+  height: auto;
   border: 1px solid #e5e0d7;
   border-radius: 9px;
   background: rgba(255, 255, 255, 0.55);
@@ -703,11 +710,16 @@ svg {
 }
 
 .site-footer {
-  height: 80px;
+  position: relative;
+  inset: auto;
+  min-height: 80px;
+  height: auto;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  margin-top: 0;
   padding: 23px 61px 22px 68px;
+  transform: none;
   background: var(--color-footer);
   color: var(--color-text-inverse);
 }
@@ -872,6 +884,7 @@ svg {
 
   .faq-section {
     padding: 48px;
+    min-height: auto;
   }
 
   .faq-list details {
