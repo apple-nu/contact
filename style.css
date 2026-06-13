@@ -674,7 +674,7 @@ svg {
   overflow: visible;
 }
 
-.faq-list details {
+.faq-item {
   width: 578px;
   max-width: 100%;
   height: auto;
@@ -685,36 +685,39 @@ svg {
   overflow: hidden;
 }
 
-.faq-list summary,
 .faq-question {
+  width: 100%;
   min-height: 45px;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 18px;
   padding: 13px 20px;
+  border: 0;
+  background: transparent;
+  color: inherit;
   cursor: pointer;
+  font-family: var(--font-body);
   font-size: 15px;
   font-weight: 700;
   line-height: 1.2;
+  text-align: left;
   list-style: none;
 }
 
-.faq-list summary::-webkit-details-marker {
-  display: none;
-}
-
-.faq-item summary:focus {
+.faq-question:focus {
   outline: none;
 }
 
-.faq-item summary:focus-visible {
+.faq-question:focus-visible {
   outline: 2px solid rgba(64, 115, 70, 0.35);
   outline-offset: 4px;
   border-radius: 12px;
 }
 
-.faq-list summary::after {
+.faq-question::after {
   content: "";
+  flex: 0 0 auto;
   width: 9px;
   height: 9px;
   border-right: 2px solid currentColor;
@@ -723,25 +726,30 @@ svg {
   transition: transform 220ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-.faq-list details[open] summary::after {
+.faq-item.is-open .faq-question::after {
   transform: rotate(225deg) translateY(-2px);
 }
 
 .faq-answer {
-  height: 0;
-  overflow: hidden;
+  display: grid;
+  grid-template-rows: 0fr;
   opacity: 0;
   transform: translateY(-4px);
   transition:
-    height 260ms cubic-bezier(0.22, 1, 0.36, 1),
+    grid-template-rows 280ms cubic-bezier(0.22, 1, 0.36, 1),
     opacity 180ms ease,
     transform 220ms ease;
 }
 
-.faq-list details[open]:not([data-faq-animating]) .faq-answer {
-  height: auto;
+.faq-item.is-open .faq-answer {
+  grid-template-rows: 1fr;
   opacity: 1;
   transform: translateY(0);
+}
+
+.faq-answer-inner {
+  min-height: 0;
+  overflow: hidden;
 }
 
 .faq-answer p {
@@ -754,7 +762,7 @@ svg {
 
 @media (prefers-reduced-motion: reduce) {
   .faq-answer,
-  .faq-list summary::after {
+  .faq-question::after {
     transition: none;
   }
 
@@ -946,7 +954,7 @@ svg {
     top: 100px;
   }
 
-  .faq-list details {
+  .faq-item {
     width: 100%;
   }
 }
@@ -1097,12 +1105,25 @@ svg {
 
   .faq-title-block {
     padding-top: 0;
-    min-height: auto;
+    min-height: 122px;
   }
 
-  .faq-scribble,
+  .faq-scribble {
+    left: 0;
+    top: 92px;
+    width: 92px;
+    height: 15px;
+    display: block;
+    opacity: 0.42;
+  }
+
   .faq-apple {
-    display: none;
+    left: 112px;
+    top: 78px;
+    width: 24px;
+    height: 30px;
+    display: block;
+    opacity: 0.42;
   }
 
   .site-footer {

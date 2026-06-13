@@ -1,6 +1,6 @@
-# apple.nu
+# Apple.nu
 
-Simple static contact website for `apple.nu`.
+Simple static contact website for `Apple.nu`.
 
 ## Files
 
