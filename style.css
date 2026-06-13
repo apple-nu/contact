@@ -611,10 +611,14 @@ svg {
 
 .faq-title-block {
   position: relative;
+  isolation: isolate;
   padding-top: 22px;
+  overflow: visible;
 }
 
 .faq-title-block p {
+  position: relative;
+  z-index: 2;
   margin: 0 0 25px;
   font-size: 12px;
   font-weight: 800;
@@ -624,6 +628,8 @@ svg {
 }
 
 .faq-title-block h2 {
+  position: relative;
+  z-index: 2;
   margin: 0;
   font-family: var(--font-display);
   font-size: 34px;
@@ -633,23 +639,11 @@ svg {
 }
 
 .faq-scribble {
-  position: absolute;
-  left: 0;
-  bottom: 20px;
-  width: 99px;
-  height: 20px;
-  border-bottom: 2px solid var(--color-green);
-  border-radius: 50%;
-  transform: rotate(-4deg);
+  display: none;
 }
 
 .faq-apple {
-  position: absolute;
-  right: 20px;
-  bottom: 2px;
-  width: 33px;
-  height: 41px;
-  color: var(--color-green);
+  display: none;
 }
 
 .faq-list {
@@ -686,6 +680,16 @@ svg {
 
 .faq-list summary::-webkit-details-marker {
   display: none;
+}
+
+.faq-item summary:focus {
+  outline: none;
+}
+
+.faq-item summary:focus-visible {
+  outline: 2px solid rgba(64, 115, 70, 0.35);
+  outline-offset: 4px;
+  border-radius: 12px;
 }
 
 .faq-list summary::after {
@@ -1022,7 +1026,7 @@ svg {
 
   .faq-title-block {
     padding-top: 0;
-    min-height: 155px;
+    min-height: auto;
   }
 
   .site-footer {

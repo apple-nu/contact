@@ -210,19 +210,19 @@
         </div>
 
         <div class="faq-list">
-          <details>
+          <details class="faq-item" data-faq-item open>
             <summary>Is apple.nu affiliated with Apple Inc.?</summary>
             <p>No. apple.nu is privately owned and is not affiliated with Apple Inc. in any way.</p>
           </details>
-          <details>
+          <details class="faq-item" data-faq-item>
             <summary>Who manages apple.nu?</summary>
             <p>The domain is privately owned and independently managed.</p>
           </details>
-          <details>
+          <details class="faq-item" data-faq-item>
             <summary>How can I contact the owner?</summary>
             <p>Send an email to hi@apple.nu and your message will reach the owner directly.</p>
           </details>
-          <details>
+          <details class="faq-item" data-faq-item>
             <summary>How long does it take to get a response?</summary>
             <p>Response time can vary, but messages are reviewed as soon as possible.</p>
           </details>
@@ -278,6 +278,28 @@
           window.location.href = `mailto:${email}`;
         });
       }
+
+      const faqItems = document.querySelectorAll("[data-faq-item]");
+
+      faqItems.forEach((item) => {
+        const summary = item.querySelector("summary");
+
+        summary.addEventListener("click", (event) => {
+          if (item.open) {
+            event.preventDefault();
+          }
+        });
+
+        item.addEventListener("toggle", () => {
+          if (!item.open) return;
+
+          faqItems.forEach((otherItem) => {
+            if (otherItem !== item) {
+              otherItem.removeAttribute("open");
+            }
+          });
+        });
+      });
     </script>
   </body>
 </html>
