@@ -270,7 +270,7 @@ svg {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: transparent;
+  background: var(--color-bg);
   overflow: visible;
   width: 100%;
   max-width: min(560px, 100%);
@@ -283,7 +283,7 @@ svg {
   max-width: 560px;
   height: auto;
   object-fit: contain;
-  background: transparent;
+  background: var(--color-bg);
   filter: none;
   opacity: 1;
   mix-blend-mode: normal;
