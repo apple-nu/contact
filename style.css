@@ -691,7 +691,8 @@ svg {
   overflow: hidden;
 }
 
-.faq-list summary {
+.faq-list summary,
+.faq-question {
   min-height: 45px;
   display: flex;
   align-items: center;
@@ -725,18 +726,48 @@ svg {
   border-right: 2px solid currentColor;
   border-bottom: 2px solid currentColor;
   transform: rotate(45deg) translateY(-2px);
+  transition: transform 220ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .faq-list details[open] summary::after {
   transform: rotate(225deg) translateY(-2px);
 }
 
-.faq-list details p {
+.faq-answer {
+  height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transform: translateY(-4px);
+  transition:
+    height 260ms cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 180ms ease,
+    transform 220ms ease;
+  will-change: height, opacity, transform;
+}
+
+.faq-list details[open] .faq-answer {
+  height: auto;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.faq-answer p {
   margin: 0;
   padding: 0 20px 15px;
   color: var(--color-text-muted);
   font-size: 14px;
   line-height: 1.45;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .faq-answer,
+  .faq-list summary::after {
+    transition: none;
+  }
+
+  .faq-answer {
+    transform: none;
+  }
 }
 
 .site-footer {

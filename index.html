@@ -211,20 +211,28 @@
 
         <div class="faq-list">
           <details class="faq-item" data-faq-item>
-            <summary>Is apple.nu affiliated with Apple Inc.?</summary>
-            <p>No. apple.nu is privately owned and is not affiliated with Apple Inc. in any way.</p>
+            <summary class="faq-question">Is apple.nu affiliated with Apple Inc.?</summary>
+            <div class="faq-answer" data-faq-answer>
+              <p>No. apple.nu is privately owned and is not affiliated with Apple Inc. in any way.</p>
+            </div>
           </details>
           <details class="faq-item" data-faq-item>
-            <summary>Who manages apple.nu?</summary>
-            <p>The domain is privately owned and independently managed.</p>
+            <summary class="faq-question">Who manages apple.nu?</summary>
+            <div class="faq-answer" data-faq-answer>
+              <p>The domain is privately owned and independently managed.</p>
+            </div>
           </details>
           <details class="faq-item" data-faq-item>
-            <summary>How can I contact the owner?</summary>
-            <p>Send an email to hi@apple.nu and your message will reach the owner directly.</p>
+            <summary class="faq-question">How can I contact the owner?</summary>
+            <div class="faq-answer" data-faq-answer>
+              <p>Send an email to hi@apple.nu and your message will reach the owner directly.</p>
+            </div>
           </details>
           <details class="faq-item" data-faq-item>
-            <summary>How long does it take to get a response?</summary>
-            <p>Response time can vary, but messages are reviewed as soon as possible.</p>
+            <summary class="faq-question">How long does it take to get a response?</summary>
+            <div class="faq-answer" data-faq-answer>
+              <p>Response time can vary, but messages are reviewed as soon as possible.</p>
+            </div>
           </details>
         </div>
       </section>
@@ -279,15 +287,121 @@
         });
       }
 
-      const faqItems = document.querySelectorAll("[data-faq-item]");
+      const faqItems = Array.from(document.querySelectorAll("[data-faq-item]"));
+      const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+
+      const closeFaq = (item) => {
+        const answer = item.querySelector("[data-faq-answer]");
+        if (!answer || !item.open) return Promise.resolve();
+
+        return new Promise((resolve) => {
+          let fallbackTimer;
+          let onTransitionEnd = () => {};
+
+          const finishClose = () => {
+            window.clearTimeout(fallbackTimer);
+            answer.removeEventListener("transitionend", onTransitionEnd);
+            item.removeAttribute("open");
+            item.removeAttribute("data-faq-animating");
+            answer.style.height = "";
+            answer.style.opacity = "";
+            answer.style.transform = "";
+            resolve();
+          };
+
+          onTransitionEnd = (event) => {
+            if (event.propertyName === "height") {
+              finishClose();
+            }
+          };
+
+          if (reducedMotion.matches) {
+            finishClose();
+            return;
+          }
+
+          item.setAttribute("data-faq-animating", "closing");
+          answer.style.height = `${answer.scrollHeight}px`;
+          answer.style.opacity = "1";
+          answer.style.transform = "translateY(0)";
+
+          answer.addEventListener("transitionend", onTransitionEnd);
+
+          requestAnimationFrame(() => {
+            answer.style.height = "0px";
+            answer.style.opacity = "0";
+            answer.style.transform = "translateY(-4px)";
+          });
+
+          fallbackTimer = window.setTimeout(finishClose, 360);
+        });
+      };
+
+      const openFaq = (item) => {
+        const answer = item.querySelector("[data-faq-answer]");
+        if (!answer || item.open) return Promise.resolve();
+
+        return new Promise((resolve) => {
+          let fallbackTimer;
+          let onTransitionEnd = () => {};
+
+          const finishOpen = () => {
+            window.clearTimeout(fallbackTimer);
+            answer.removeEventListener("transitionend", onTransitionEnd);
+            item.removeAttribute("data-faq-animating");
+            answer.style.height = "auto";
+            answer.style.opacity = "";
+            answer.style.transform = "";
+            resolve();
+          };
+
+          onTransitionEnd = (event) => {
+            if (event.propertyName === "height") {
+              finishOpen();
+            }
+          };
+
+          item.setAttribute("open", "");
+
+          if (reducedMotion.matches) {
+            finishOpen();
+            return;
+          }
+
+          item.setAttribute("data-faq-animating", "opening");
+          answer.style.height = "0px";
+          answer.style.opacity = "0";
+          answer.style.transform = "translateY(-4px)";
+
+          answer.addEventListener("transitionend", onTransitionEnd);
+
+          requestAnimationFrame(() => {
+            answer.style.height = `${answer.scrollHeight}px`;
+            answer.style.opacity = "1";
+            answer.style.transform = "translateY(0)";
+          });
+
+          fallbackTimer = window.setTimeout(finishOpen, 360);
+        });
+      };
+
+      let faqAnimationQueue = Promise.resolve();
 
       faqItems.forEach((item) => {
-        item.addEventListener("toggle", () => {
-          if (!item.open) return;
+        const summary = item.querySelector("summary");
+        if (!summary) return;
 
-          faqItems.forEach((otherItem) => {
-            if (otherItem !== item) {
-              otherItem.removeAttribute("open");
+        summary.addEventListener("click", (event) => {
+          event.preventDefault();
+
+          faqAnimationQueue = faqAnimationQueue.then(async () => {
+            const otherOpenItems = faqItems.filter((otherItem) => otherItem !== item && otherItem.open);
+            await Promise.all(otherOpenItems.map(closeFaq));
+
+            if (item.open) {
+              await closeFaq(item);
+            } else {
+              await openFaq(item);
             }
           });
         });
