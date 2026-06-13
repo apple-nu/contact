@@ -210,7 +210,7 @@
         </div>
 
         <div class="faq-list">
-          <details class="faq-item" data-faq-item open>
+          <details class="faq-item" data-faq-item>
             <summary>Is apple.nu affiliated with Apple Inc.?</summary>
             <p>No. apple.nu is privately owned and is not affiliated with Apple Inc. in any way.</p>
           </details>
@@ -282,14 +282,6 @@
       const faqItems = document.querySelectorAll("[data-faq-item]");
 
       faqItems.forEach((item) => {
-        const summary = item.querySelector("summary");
-
-        summary.addEventListener("click", (event) => {
-          if (item.open) {
-            event.preventDefault();
-          }
-        });
-
         item.addEventListener("toggle", () => {
           if (!item.open) return;
 

@@ -612,6 +612,7 @@ svg {
 .faq-title-block {
   position: relative;
   isolation: isolate;
+  min-height: 188px;
   padding-top: 22px;
   overflow: visible;
 }
@@ -639,11 +640,36 @@ svg {
 }
 
 .faq-scribble {
-  display: none;
+  position: absolute;
+  z-index: 1;
+  left: 0;
+  top: 152px;
+  width: 118px;
+  height: 20px;
+  display: block;
+  border-bottom: 2px solid var(--color-green);
+  border-radius: 50%;
+  opacity: 0.95;
+  pointer-events: none;
+  transform: rotate(-4deg);
 }
 
 .faq-apple {
-  display: none;
+  position: absolute;
+  z-index: 1;
+  left: 132px;
+  top: 136px;
+  width: 33px;
+  height: 41px;
+  display: block;
+  color: var(--color-green);
+  opacity: 0.95;
+  pointer-events: none;
+}
+
+.faq-apple svg {
+  width: 100%;
+  height: 100%;
 }
 
 .faq-list {
@@ -891,6 +917,19 @@ svg {
     min-height: auto;
   }
 
+  .faq-title-block {
+    min-height: 150px;
+  }
+
+  .faq-scribble {
+    top: 116px;
+  }
+
+  .faq-apple {
+    left: 136px;
+    top: 100px;
+  }
+
   .faq-list details {
     width: 100%;
   }
@@ -1027,6 +1066,11 @@ svg {
   .faq-title-block {
     padding-top: 0;
     min-height: auto;
+  }
+
+  .faq-scribble,
+  .faq-apple {
+    display: none;
   }
 
   .site-footer {
