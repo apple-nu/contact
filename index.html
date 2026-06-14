@@ -140,12 +140,13 @@
 
           <form class="netlify-contact-form" name="contact" method="POST" data-netlify="true" netlify-honeypot="bot-field">
             <input type="hidden" name="form-name" value="contact">
+            <input type="hidden" name="subject" data-remove-prefix value="New message from Apple.nu">
             <p class="bot-field">
               <label>Leave this field empty <input name="bot-field"></label>
             </p>
 
             <div class="form-group">
-              <label class="visually-hidden" for="contact-email">Your email</label>
+              <label class="visually-hidden" for="contact-email">Contact email</label>
               <input class="premium-input" id="contact-email" name="email" type="email" autocomplete="email" placeholder="Your email" required>
             </div>
 
